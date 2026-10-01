@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>回拨承诺管理台</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-dot"></span>
+    <h1>回拨承诺管理台</h1>
+  </div>
+  <div class="top-controls">
+    <label>视角
+      <select id="roleSelect">
+        <option value="agent">坐席</option>
+        <option value="supervisor">主管</option>
+      </select>
+    </label>
+    <label id="actorWrap">当前坐席
+      <select id="actorSelect"></select>
+    </label>
+    <label>筛选
+      <select id="statusFilter">
+        <option value="">全部状态</option>
+        <option value="pending">待回拨</option>
+        <option value="completed">已完成</option>
+        <option value="expired">已逾期</option>
+        <option value="rescheduled">已改约</option>
+        <option value="dispute_closed">争议关闭</option>
+        <option value="cancelled_wrong_number">号码拨错</option>
+        <option value="cancelled_refused">客户拒接</option>
+        <option value="cancelled_resolved_elsewhere">他渠道解决</option>
+        <option value="cancelled_duplicate">重复创建</option>
+      </select>
+    </label>
+    <button id="newBtn" class="btn btn-amber">+ 新承诺</button>
+    <button id="refreshBtn" class="btn">刷新</button>
+    <span id="clock" class="clock"></span>
+  </div>
+</header>
+
+<main class="layout">
+  <!-- 左：承诺队列 -->
+  <section class="panel queue-panel">
+    <div class="panel-head">
+      <h2>承诺队列 <small>按承诺时刻排序</small></h2>
+      <span id="queueMeta" class="meta"></span>
+    </div>
+    <div id="queue" class="queue-list"></div>
+  </section>
+
+  <!-- 中：详情 + 客户历史 -->
+  <section class="panel detail-panel">
+    <div id="detail" class="detail-empty">选择左侧承诺查看详情；客户历史与当前承诺同屏展示。</div>
+  </section>
+
+  <!-- 右：报表（主管突出失约） -->
+  <aside id="reportPanel" class="panel report-panel">
+    <div class="panel-head"><h2>报表</h2></div>
+    <nav class="tabs">
+      <button data-tab="breach" class="tab active">转派与失约</button>
+      <button data-tab="windows" class="tab">客户时段</button>
+      <button data-tab="calls" class="tab">拨打记录</button>
+    </nav>
+    <div id="tab-breach" class="tab-body"></div>
+    <div id="tab-windows" class="tab-body hidden"></div>
+    <div id="tab-calls" class="tab-body hidden"></div>
+  </aside>
+</main>
+
+<!-- 新承诺弹层 -->
+<div id="modal" class="modal hidden">
+  <div class="modal-card">
+    <h3 id="modalTitle">新建回拨承诺</h3>
+    <div id="modalBody"></div>
+    <div class="modal-actions">
+      <button id="modalCancel" class="btn">取消</button>
+      <button id="modalOk" class="btn btn-amber">提交</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+<script src="app.js"></script>
+</body>
+</html>
